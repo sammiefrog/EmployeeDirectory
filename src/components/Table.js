@@ -1,5 +1,5 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {Component} from "react";
+import { createStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,54 +8,61 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 // import API from "../utils/API";
+import ResultRow from "./ResultRow";
+import API from "../utils/API.js";
 
-const useStyles = makeStyles({
+const styles = () => createStyles({
   table: {
     minWidth: 650,
   },
 });
 
-function createData(thumbnail, firstName, lastName, email) {
-  return { thumbnail, firstName, lastName, email };
-}
+class UsersTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+    };
+  }
+    
+    componentDidMount() {
+        API.getUsers().then(res => {
+            this.setState({ users: res.data.results }, () => console.log(this.state))
+        }).catch(err => console.log(err));
+  }
 
-const rows = [
-  createData("picture eventually", "Bob", "Barker", "bbarker@gmail.com"),
-  createData("picture eventually", "Bob", "Barker", "bbarker@gmail.com"),
-  createData("picture eventually", "Bob", "Barker", "bbarker@gmail.com"),
-  createData("picture eventually", "Bob", "Barker", "bbarker@gmail.com"),
-  createData("picture eventually", "Bob", "Barker", "bbarker@gmail.com"),
-];
+    render() {
+    const { classes } = this.props;
 
-export default function SimpleTable() {
-  const classes = useStyles();
-
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Employees</TableCell>
-            {/* <TableCell align="right">Thumbnail</TableCell> */}
-            <TableCell align="right">First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right">E-Mail</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.thumbnail}
-              </TableCell>
-              {/* <TableCell align="right">{row.thumbnail}</TableCell> */}
-              <TableCell align="right">{row.firstName}</TableCell>
-              <TableCell align="right">{row.lastName}</TableCell>
-              <TableCell align="right">{row.email}</TableCell>
+    return (
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Employees</TableCell>
+              <TableCell align="right">First Name</TableCell>
+              <TableCell align="right">Last Name</TableCell>
+              <TableCell align="right">Phone</TableCell>
+              <TableCell align="right">E-Mail</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+          </TableHead>
+          <ResultRow />
+          <TableBody>
+            {this.state.users.map((user, i) => (
+              <ResultRow
+                key={i}
+                thumbnail={user.picture.thumbnail}
+                firstName={user.name.first}
+                lastName={user.name.last}
+                phone={user.phone}
+                email={user.email}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  }
 }
+
+export default withStyles(styles)(UsersTable);
