@@ -1,61 +1,22 @@
-import React, {Component} from "react";
-import { createStyles, withStyles } from "@material-ui/core/styles";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-// import SearchButton from "./Button";
 
-const styles = theme => createStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
       width: "25ch",
     },
   },
-});
+}));
 
-class BasicTextFields extends Component {
-  state = {
-    searchTerm: "",
-  };
+export default function BasicTextFields(props) {
+  const classes = useStyles();
 
-  handleInputChange = (event) => {
-    // Getting the value and name of the input
-    let value = event.target.value;
-    const name = event.target.name;
-
-
-    // Updating the input's state
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleFormSubmit = (event) => {
-    // Preventing the default behavior of the form submit (which is to refresh the page)
-    event.preventDefault();
-    console.log(event);
-
-    this.setState({
-      searchTerm: ""
-    });
-  };
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <form className={classes.root} noValidate autoComplete="off">
-        <TextField
-          id="outlined-basic"
-          name="searchTerm"
-          value={this.state.searchTerm}
-          onChange={this.handleInputChange}
-          label="Search by Name"
-          variant="outlined"
-        />
-        {/* <SearchButton onClick={this.handleFormSubmit} /> */}
-      </form>
-    );
-  }
+  return (
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField id="outlined-basic" value={props.search} name="search" onChange={props.handleInputChange} label="Search by Name" variant="outlined" />
+    </form>
+  );
 }
-
-export default withStyles(styles)(BasicTextFields);
