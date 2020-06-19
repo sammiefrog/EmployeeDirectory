@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 // import API from "../utils/API";
 import ResultRow from "./ResultRow";
 import API from "../utils/API.js";
+import TextField from "./TextField"
 
 const styles = () => createStyles({
   table: {
@@ -26,42 +27,46 @@ class UsersTable extends Component {
   }
     
     componentDidMount() {
-        API.getUsers().then(res => {
-            this.setState({ users: res.data.results }, () => console.log(this.state))
+      API.getUsers().then(res => {
+        const cleanData = res.data.results.map(user => ({
+          ...user,
+          fullName: user.name.last + ", " + user.name.first
+        }));
+        console.log(cleanData);
+        this.setState({ users: cleanData }, () => console.log(this.state))
         }).catch(err => console.log(err));
   }
 
     render() {
     const { classes } = this.props;
 
-    return (
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Employees</TableCell>
-              <TableCell align="right">First Name</TableCell>
-              <TableCell align="right">Last Name</TableCell>
-              <TableCell align="right">Phone</TableCell>
-              <TableCell align="right">E-Mail</TableCell>
-            </TableRow>
-          </TableHead>
-          <ResultRow />
-          <TableBody>
-            {this.state.users.map((user, i) => (
-              <ResultRow
-                key={i}
-                thumbnail={user.picture.thumbnail}
-                firstName={user.name.first}
-                lastName={user.name.last}
-                phone={user.phone}
-                email={user.email}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
+      return (
+        <TableContainer component={Paper}>
+          <TextField />
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Employees</TableCell>
+                <TableCell align="right">Full Name</TableCell>
+                <TableCell align="right">Phone</TableCell>
+                <TableCell align="right">E-Mail</TableCell>
+              </TableRow>
+            </TableHead>
+            <ResultRow />
+            <TableBody>
+              {this.state.users.map((user, i) => (
+                <ResultRow
+                  key={i}
+                  thumbnail={user.picture.thumbnail}
+                  fullName={user.fullName}
+                  phone={user.phone}
+                  email={user.email}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
   }
 }
 
