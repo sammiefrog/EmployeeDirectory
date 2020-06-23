@@ -13,7 +13,7 @@ import TextField from "./TextField";
 
 const styles = () => createStyles({
   table: {
-    minWidth: 650,
+    minWidth: '85%',
   },
 });
 
@@ -122,7 +122,7 @@ class UsersTable extends Component {
             {/* filtering through users to search by full name */}
             {this.state.users
               .filter((user) =>
-                user.fullName
+                user.fullName || user.phone || user.email
                   .toLowerCase()
                   .includes(this.state.search.toLowerCase())
               )
