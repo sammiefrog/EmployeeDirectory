@@ -22,15 +22,14 @@ class UsersTable extends Component {
     super(props);
     this.state = {
       users: [],
-      search: "",
-      sorted: false,
-      sortType: "asc"
+      search: ""
     };
   }
 
   componentDidMount() {
     API.getUsers()
       .then((res) => {
+        //cleaning the data to make a new key 'full name' combining first and last
         const cleanData = res.data.results.map((user) => ({
           ...user,
           fullName: user.name.first + " " + user.name.last,
@@ -47,37 +46,39 @@ class UsersTable extends Component {
     const name = event.target.name;
 
     // Updating the input's state
-    this.setState({
-      [name]: value,
-    }, () => console.log(this.state))
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => console.log(this.state)
+    );
   };
 
-  // sort = (sortType) => {
-  //   console.log("clicked");
-
-  //   if (sortType === "asc") {
-  //     this.setState({
-  //       users: this.state.users.sort((a, b) => {
-  //         return a.fullName > b.fullName
-  //       }), sortType: "asc"
-  //     });
-  //   }
-  // }
-
-// compareBy(fullName) {
-//   console.log("triggered")
-// return function (a, b) {
-//   if (""+a[fullName]<(""+b[fullName])) return -1;
-//   if (""+a[fullName]>(""+b[fullName])) return 1;
-//   return 0;
-//   };
-// }
-
-sortAlpha() {
-this.setState({users: this.state.users.sort((a, b)=> (a.fullName > b.fullName) ? 1: -1)});
-} 
-
-
+  //sorting full names alphabetically
+  sortAlphaName() {
+    this.setState({
+      users: this.state.users.sort((a, b) =>
+        a.fullName > b.fullName ? 1 : -1
+      ),
+    });
+  }
+  //sorting email alphabetically
+  sortAlphaEmail() {
+    this.setState({
+      users: this.state.users.sort((a, b) =>
+        a.email > b.email ? 1 : -1
+      ),
+    });
+  }
+//sorting by first number of phone# ascending
+  sortNum() {
+    this.setState({
+      users: this.state.users.sort((a, b) =>
+        a.phone > b.phone ? 1 : -1
+      ),
+    });
+  }
+//rendering the table
   render() {
     const { classes } = this.props;
 
@@ -91,18 +92,34 @@ this.setState({users: this.state.users.sort((a, b)=> (a.fullName > b.fullName) ?
           <TableHead>
             <TableRow>
               <TableCell>Picture</TableCell>
-              <TableCell align="center">
-                <button
-                  onClick={() => {this.sortAlpha()}}
-                >
-                  Full Name
-                </button>
+              <TableCell
+                align="center"
+                onClick={() => {
+                  this.sortAlphaName();
+                }}
+              >
+                Full Name
               </TableCell>
-              <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">E-Mail</TableCell>
+              <TableCell
+                align="center"
+                onClick={() => {
+                  this.sortNum();
+                }}
+              >
+                Phone
+              </TableCell>
+              <TableCell
+                align="center"
+                onClick={() => {
+                  this.sortAlphaEmail();
+                }}
+              >
+                E-Mail
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* filtering through users to search by full name */}
             {this.state.users
               .filter((user) =>
                 user.fullName

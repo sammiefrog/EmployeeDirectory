@@ -2,7 +2,7 @@ import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
-
+//using props to populate the rows of the table
 function ResultRow(props) {
   return (
     <TableRow>

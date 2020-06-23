@@ -26,13 +26,15 @@ A simple react application to display 25 random eployees, and non-sensitive info
 To search and sort through a table of employees.
 
 <h2 id="screenshots">Screenshots</h2>
+<img src="./public/images/sshot.png" alt="still photo of working application">
   
 <h2 id= "contact">Contact</h2>
 <li>Name: Sammantha Sasenick</li> 
 <li>Github: https://github.com/sammiefrog</li> 
-<li>Portfolio: sammiefrog.github.io</li>
+<li>Portfolio: https://sammiefrog.github.io</li>
 <li>Email: <a href="mailto:ssasenick412@gmail.com" target="_blank">ssasenick412@gmail.com</a></li> 
 <li>LinkedIn: www.linkedin.com/in/sammantha-sasenick412</li> 
     
 <h2 id= "tests">Tests</h2>
+<img src="./public/images/empdir.gif" alt="animation of working application">
  

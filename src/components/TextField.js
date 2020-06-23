@@ -6,11 +6,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "45ch",
     },
   },
 }));
-
+//text field using porps for the value and onChange that connect to the table
 export default function BasicTextFields(props) {
   const classes = useStyles();
 
