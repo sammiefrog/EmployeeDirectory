@@ -16,7 +16,7 @@ export default function BasicTextFields(props) {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="outlined-basic" value={props.search} name="search" onChange={props.handleInputChange} label="Search by Name" variant="outlined" />
+      <TextField id="outlined-basic" value={props.search} name="search" onChange={props.handleInputChange} label="Search by Name, Phone, or Email" variant="outlined" />
     </form>
   );
 }

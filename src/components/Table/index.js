@@ -7,9 +7,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import ResultRow from "./ResultRow";
-import API from "../utils/API.js";
-import TextField from "./TextField";
+import ResultRow from "../ResultRow";
+import API from "../../utils/API";
+import TextField from "../TextField";
 
 const styles = () => createStyles({
   table: {
@@ -22,7 +22,8 @@ class UsersTable extends Component {
     super(props);
     this.state = {
       users: [],
-      search: ""
+      search: "",
+      searchBy: "fullName",
     };
   }
 
@@ -32,7 +33,10 @@ class UsersTable extends Component {
         //cleaning the data to make a new key 'full name' combining first and last
         const cleanData = res.data.results.map((user) => ({
           ...user,
+          thumbnail: user.picture.thumbnail,
           fullName: user.name.first + " " + user.name.last,
+          phone: user.phone,
+          email: user.email,
         }));
         console.log(cleanData);
         this.setState({ users: cleanData }, () => console.log(this.state));
@@ -53,6 +57,11 @@ class UsersTable extends Component {
       () => console.log(this.state)
     );
   };
+
+
+  // sortBy() {
+    
+  // }
 
   //sorting full names alphabetically
   sortAlphaName() {
@@ -121,10 +130,17 @@ class UsersTable extends Component {
           <TableBody>
             {/* filtering through users to search by full name */}
             {this.state.users
-              .filter((user) =>
-                user.fullName || user.phone || user.email
-                  .toLowerCase()
-                  .includes(this.state.search.toLowerCase())
+              .filter(
+                (user) =>
+                  user.fullName
+                    .toLowerCase()
+                    .includes(this.state.search.toLowerCase()) ||
+                  user.email
+                    .toLowerCase()
+                    .includes(this.state.search.toLowerCase()) ||
+                  user.phone
+                    .toLowerCase()
+                    .includes(this.state.search.toLowerCase())
               )
               .map((user, i) => (
                 <ResultRow
