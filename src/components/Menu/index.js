@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import "./style.css"
 
 const useStyles = makeStyles({
   myButton: {
@@ -14,7 +13,6 @@ const useStyles = makeStyles({
     padding: "0 30px",
     marginBottom: "20px",
     fontSize: "25px",
-    // justifyContent: "center",
   },
   title: {
     margin: "10px",

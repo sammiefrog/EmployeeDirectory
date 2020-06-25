@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { createStyles, withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,11 +11,12 @@ import ResultRow from "../ResultRow";
 import API from "../../utils/API";
 import TextField from "../TextField";
 
-const styles = () => createStyles({
-  table: {
-    minWidth: '85%',
-  },
-});
+const styles = () =>
+  createStyles({
+    table: {
+      minWidth: "85%",
+    },
+  });
 
 class UsersTable extends Component {
   constructor(props) {
@@ -59,10 +60,6 @@ class UsersTable extends Component {
   };
 
 
-  // sortBy() {
-    
-  // }
-
   //sorting full names alphabetically
   sortAlphaName() {
     this.setState({
@@ -74,20 +71,16 @@ class UsersTable extends Component {
   //sorting email alphabetically
   sortAlphaEmail() {
     this.setState({
-      users: this.state.users.sort((a, b) =>
-        a.email > b.email ? 1 : -1
-      ),
+      users: this.state.users.sort((a, b) => (a.email > b.email ? 1 : -1)),
     });
   }
-//sorting by first number of phone# ascending
+  //sorting by first number of phone# ascending
   sortNum() {
     this.setState({
-      users: this.state.users.sort((a, b) =>
-        a.phone > b.phone ? 1 : -1
-      ),
+      users: this.state.users.sort((a, b) => (a.phone > b.phone ? 1 : -1)),
     });
   }
-//rendering the table
+  //rendering the table
   render() {
     const { classes } = this.props;
 
