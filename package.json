@@ -1,7 +1,6 @@
 {
   "name": "empdir",
   "version": "0.1.0",
-  "private": true,
   "homepage": "https://sammiefrog.github.io/EmployeeDirectory/",
   "dependencies": {
     "@material-ui/core": "^4.10.2",
