@@ -13,12 +13,6 @@ const useStyles = makeStyles({
     padding: "0 30px",
     marginBottom: "20px",
     fontSize: "25px",
-  },
-  title: {
-    margin: "10px",
-  },
-  subHead: {
-    marginTop: "10px",
   }
 });
 
